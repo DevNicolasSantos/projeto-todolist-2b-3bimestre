@@ -4,7 +4,10 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Projeto 2B</Text>
+      <View>
+        <Image source={list} />
+      </View>
+      <Text>Projeto 2B - 13/08/2025</Text>
       <StatusBar style="auto" />
     </View>
   );
