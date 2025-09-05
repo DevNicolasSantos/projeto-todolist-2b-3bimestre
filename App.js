@@ -1,16 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet, Text, TouchableOpacity, View, Image, TextInput } from 'react-native'; 
 import logo from './assets/logo.png';
-import { TextInput } from 'react-native-web';
 import add from './assets/add.png';
 import { useState } from 'react';
+import { FlashList } from '@shopify/flash-list';
 
 export default function App() {
+
   const [ tarefa, setTarefa ] = useState("");
+  const [ tarefas, setTarefas ] = useState([]);
+
   const btnAdicionar = () => {
-    Alert.alert("TODO List","Valor: ", + tarefa);
+    //Alert.alert("TODO List", "Valor: " + tarefa);
+    setTarefas([tarefa, ...tarefas]);
     setTarefa("");
   }
+
+  const renderItem = ({ item }) => {
+    <Text>{item}</Text>
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.viewLogo}>
@@ -18,16 +27,26 @@ export default function App() {
       </View>
       <Text>TODO List</Text>
       <StatusBar style="auto" />
+
       <View style={styles.viewInput}>
         <TextInput 
           placeholder="Digite a Tarefa" 
           value={tarefa} 
-          onChange={setTarefa}
+          onChangeText={setTarefa}
         />
+
         <TouchableOpacity onPress={btnAdicionar}>
           <Image source={add} style={styles.add} />
         </TouchableOpacity>
       </View>
+
+      <View style={styles.viewTarefas}>
+        <FlashList
+        data={tarefas}
+        renderItem={({ item }) => <Text>{item}</Text>}
+      />
+      </View>
+
       <StatusBar style="auto" />
     </View>
   );
@@ -59,5 +78,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center',
     marginBottom: 10
+  },
+  viewTarefas: {
+    width: "100%",
+    flex: 1,
   }
 });
