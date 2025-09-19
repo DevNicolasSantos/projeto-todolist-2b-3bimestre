@@ -4,6 +4,8 @@ import logo from './assets/logo.png';
 import add from './assets/add.png';
 import { useState } from 'react';
 import { FlashList } from '@shopify/flash-list';
+import trash from './assets/trash.jpg';
+import Checkbox from 'expo-checkbox';
 
 export default function App() {
 
@@ -16,7 +18,15 @@ export default function App() {
     setTarefa("");
   }
 
-  const renderItem = ({ item }) => <Text>{item}</Text>;
+  const renderItem = ({ item }) => (
+    <View style={styles.viewItemRender}>
+      <Text>{item}</Text>
+      <Checkbox value={false} />
+      <TouchableOpacity>
+        <Image source={trash} />
+      </TouchableOpacity>
+    </View>
+  );  
 
   return (
     <View style={styles.container}>
@@ -81,5 +91,11 @@ const styles = StyleSheet.create({
   viewTarefas: {
     width: "100%",
     flex: 1,
+  },
+  viewItemRender: {
+    height: 50,
+    width: '100%',
+    flexDirection: 'row',
+    gap: 1,
   }
 });
